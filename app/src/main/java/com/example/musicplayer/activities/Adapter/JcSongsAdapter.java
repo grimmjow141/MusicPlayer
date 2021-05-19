@@ -18,7 +18,7 @@ import com.example.musicplayer.activities.SongsActivity;
 
 import java.io.IOException;
 import java.util.List;
-
+//acest adaptop practic umple cu informatii recycleview-ul (= lista cu melodiile)
 public class JcSongsAdapter extends RecyclerView.Adapter<JcSongsAdapter.SongsAdapterViewHolder> {
     Context context;
     private int selectedPosition;
