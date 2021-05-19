@@ -79,18 +79,21 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         storagePermissions = new String[]{Manifest.permission.READ_EXTERNAL_STORAGE};
+        //cere permisiunea storage-ului
         requestStoragePermission();
         auth=FirebaseAuth.getInstance();
         user=auth.getCurrentUser();
         progressDialog=new ProgressDialog(this);
         progressDialog.setTitle("Please wait...");
         progressDialog.setCanceledOnTouchOutside(false);
+        //aici se completeaza automat campurile cu care te-ai logat anterior
         easyDB=EasyDB.init(this,"DB")
                 .setTableName("USER_TABLE")
                 .addColumn("email","text")
                 .addColumn("password","text")
                 .doneTableColumn();
         Cursor res=easyDB.getAllData();
+        //aici "punem mana" efectiv pe resultatele bazei de date
         while(res.moveToNext())
         {
             emailEt.setText(res.getString(1));
@@ -120,6 +123,7 @@ public class MainActivity extends AppCompatActivity {
         }
         progressDialog.setMessage("Logging In...");
         progressDialog.show();
+        //aici se incearca logara user-ului
         auth.signInWithEmailAndPassword(email,password).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
             @Override
             public void onSuccess(AuthResult authResult) {
@@ -129,6 +133,7 @@ public class MainActivity extends AppCompatActivity {
                         .doneDataAdding();
                 startActivity(new Intent(getApplicationContext(),MenuActivity.class));
             }
+            //bucata de cod de mai jos se apeleaza in cazul in care datele de logare sunt incorecte
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
@@ -137,6 +142,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
     private boolean checkStoragePermission()
     {
         boolean result= ContextCompat.checkSelfPermission(this,Manifest.permission.READ_EXTERNAL_STORAGE)==
